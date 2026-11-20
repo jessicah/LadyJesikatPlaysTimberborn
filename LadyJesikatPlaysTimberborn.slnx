@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="ExtraDebugLogging/ExtraDebugLogging.csproj" />
+  <Project Path="MultiFactionsOfMadness/MultiFactionsOfMadness.csproj" />
+  <Project Path="SharedDependencies/SharedDependencies.shproj" />
+  <Project Path="SoundScale/SoundScale.csproj" />
+  <Project Path="UiScale/UiScale.csproj" />
+</Solution>

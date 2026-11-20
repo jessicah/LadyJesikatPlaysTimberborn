@@ -1,0 +1,47 @@
+﻿<Project>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<PropertyGroup Label="Timberborn">
+		<TimberbornGame>C:\SteamLibrary\steamapps\common\Timberborn\Timberborn_Data\Managed</TimberbornGame>
+		<TimberbornWorkshop>C:\SteamLibrary\steamapps\workshop\content\1062090</TimberbornWorkshop>
+	</PropertyGroup>
+
+	<Import Project="$(MSBuildThisFileFullPath).user" Condition="Exists('$(MSBuildThisFileFullPath).user')"/>
+	
+	<ItemGroup>
+		<!-- Publicizer -->
+		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<!-- Game Assemblies -->
+		<Reference Include="$(TimberbornGame)\Unity*.dll" Publicize="true">
+			<DestinationSubDirectory>libs/</DestinationSubDirectory>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="$(TimberbornGame)\Timberborn.*.dll" Publicize="true">
+			<DestinationSubDirectory>libs/</DestinationSubDirectory>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="$(TimberbornGame)\Bindito.*.dll" Publicize="true">
+			<DestinationSubDirectory>libs/</DestinationSubDirectory>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="$(TimberbornGame)\System.Collections.Immutable.dll">
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="$(TimberbornGame)\Newtonsoft.Json.dll">
+			<Private>False</Private>
+		</Reference>
+
+		<!-- Third Party Mods -->
+		<Using Include="HarmonyLib"/>
+
+		<Reference Include="$(TimberbornWorkshop)\3284904751\0Harmony.dll">
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+</Project>
