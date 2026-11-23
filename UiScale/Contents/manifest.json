@@ -1,0 +1,8 @@
+﻿{
+  "Name": "Custom UI Scale",
+  "Version": "1.0.0",
+  "Id": "LadyJesikat.CustomUIScale",
+  "MinimumGameVersion": "1.1.0.0",
+  "Description": "Allows a larger range for UI Scale (40% to 200%)",
+  "RequiredMods": [{"Id": "eMka.ModSettings"}]
+}

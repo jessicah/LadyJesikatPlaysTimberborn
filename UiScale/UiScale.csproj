@@ -6,6 +6,19 @@
 	<LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-	<Import Project="..\SharedDependencies\TimberbornDependencies.targets"/>
+	<Import Project="..\SharedDependencies\TimberbornDependencies.targets" />
+
+	<ProjectExtensions><VisualStudio><UserProperties contents_4manifest_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+	<ItemGroup>
+	  <None Update="Contents\manifest.json">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<PropertyGroup>
+		<RequireModSettings>true</RequireModSettings>
+		<RequireHarmony>false</RequireHarmony>
+	</PropertyGroup>
 
 </Project>
