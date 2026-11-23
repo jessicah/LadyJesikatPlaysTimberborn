@@ -1,15 +1,37 @@
-﻿<Project>
+﻿<Project InitialTargets="ValidateBuildSettings">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
-	<PropertyGroup Label="Timberborn">
-		<TimberbornGame>C:\SteamLibrary\steamapps\common\Timberborn\Timberborn_Data\Managed</TimberbornGame>
-		<TimberbornWorkshop>C:\SteamLibrary\steamapps\workshop\content\1062090</TimberbornWorkshop>
+		<RequireModSettings>true</RequireModSettings>
+		<RequireHarmony>true</RequireHarmony>
 	</PropertyGroup>
 
 	<Import Project="$(MSBuildThisFileFullPath).user" Condition="Exists('$(MSBuildThisFileFullPath).user')"/>
-	
+
+	<Target Name="ValidateBuildSettings">
+		<Error Text="'TimberbornGame' user setting is missing from SharedDependencies\TimberbornDependencies.targets.user. See README.md"
+			   Condition="'$(TimberbornGame)' == ''"/>
+		<Error Text="'TimberbornWorkshop' user setting is missing from SharedDependencies\TimberbornDependencies.targets.user. See README.md"
+			   Condition="'$(TimberbornWorkshop)' == ''"/>
+		<Error Text="'TimberbornUserMods' user setting is missing from SharedDependencies\TimberbornDependencies.targets.user. See README.md"
+			   Condition="'$(TimberbornUserMods)' == ''"/>
+	</Target>
+
+	<Target Name="CopyContentsToUserMods" AfterTargets="AfterBuild">
+		<ItemGroup>
+			<ModContents Include="$(MSBuildProjectDirectory)\Contents\**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(ModContents)" DestinationFolder="$(OutDir)%(RecursiveDir)"/>
+	</Target>
+
+	<PropertyGroup>
+		<OutputPath>$(TimberbornUserMods)\$(MSBuildProjectName)</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<GenerateDependencyFile>false</GenerateDependencyFile>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>None</DebugType>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- Publicizer -->
 		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3">
@@ -36,12 +58,54 @@
 		<Reference Include="$(TimberbornGame)\Newtonsoft.Json.dll">
 			<Private>False</Private>
 		</Reference>
+	</ItemGroup>
 
-		<!-- Third Party Mods -->
+	<ItemGroup Condition="'$(RequireHarmony)' == 'true'">
+		<!-- Third Party Mods: Harmony -->
 		<Using Include="HarmonyLib"/>
 
 		<Reference Include="$(TimberbornWorkshop)\3284904751\0Harmony.dll">
 			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(RequireModSettings)' == 'true'">
+		<!-- Third Party Mods: Mod Settings -->
+		<Reference Include="ModSettings.ColorPicker">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.ColorPicker.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.Common">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.Common.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.CommonUI">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.CommonUI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.Core">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.Core.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.CoreUI">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.CoreUI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.GameUI">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.GameUI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.MainMenuUI">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.MainMenuUI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.MapEditorUI">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.MapEditorUI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ModSettings.ModManager">
+			<HintPath>$(TimberbornWorkshop)\3283831040\version-1.1\Scripts\ModSettings.ModManager.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
 </Project>

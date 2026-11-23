@@ -26,7 +26,7 @@ game. A mods setting panel could be useful here.
 ## Building
 
 Add a user file in SharedDependencies with the path to the Timberborn managed folder and
-the steam workshop.
+the steam workshop. This file is ignored by git.
 
 Create `SharedDependencies\TimberbornDependencies.targets.user`:
 ```xml
@@ -34,8 +34,26 @@ Create `SharedDependencies\TimberbornDependencies.targets.user`:
 	<PropertyGroup Label="Timberborn">
 		<TimberbornGame>Y:\SteamLibrary\steamapps\common\Timberborn\Timberborn_Data\Managed</TimberbornGame>
 		<TimberbornWorkshop>Y:\SteamLibrary\steamapps\workshop\content\1062090</TimberbornWorkshop>
+		<TimberbornUserMods>O:\Onedrive\Documents\Timberborn\Mods</TimberbornUserMods>
 	</PropertyGroup>
 </Project>
 ```
 
-This will overwrite the values in `TimberbornDependencies.targets`.
+`TimberbornGame` is where the game DLLs are found under your Steam Library, `TimberbornWorkshop`
+is the Steam Workshop folder, and `TimberbornUserMods` is in your Documents folder, where
+the built mods get written to.
+
+If you don't want to automatically update the mods in your Timberborn folder, specify an
+alternate location, and then manually copy into your Timberborn Mods folder.
+
+Projects can opt in/out of Harmony and ModSettings by defining property items:
+
+```xml
+<PropertyGroup>
+	<RequireModSettings>true</RequireModSettings>
+	<RequireHarmony>false</RequireHarmony>
+</PropertyGroup>
+```
+
+By default, these are set to `true`. It is recommended to set to `false` to reduce unneeded
+dependencies.
