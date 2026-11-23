@@ -1,5 +1,6 @@
 ﻿using Bindito.Core;
 using ModSettings.Core;
+using ModSettings.CoreUI;
 using Timberborn.CoreUI;
 using Timberborn.Modding;
 using Timberborn.SettingsSystem;
@@ -57,5 +58,6 @@ public class UiScaleConfigurator : Configurator
     public override void Configure()
     {
         Bind<UiScaleSettings>().AsSingleton();
+        MultiBind<IModSettingElementFactory>().To<SliderFloatModSettingElementFactory>().AsSingleton();
     }
 }
